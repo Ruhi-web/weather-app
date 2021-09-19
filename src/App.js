@@ -1,74 +1,54 @@
 import './App.css';
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import Weather from './Weather';
+
 
 const App = () => {
+
   let date = String(new window.Date());
-  var day = date.slice(3, 15);
 
-  const api = {
-    key: '553dcfa609cbc86a81ba1a5dba914ba8',
-    base: 'https://openweathermap.org/data/2.5/'
 
-  }
-  const [query,
-    setQuery] = useState('')
-  const [weather,
-    setWeather] = useState({})
+  const [query, setQuery] = useState('')
+  const [weather, setWeather] = useState({})
 
-    const search = evt => {
-    if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
-        .then(res => res.json())
-        .then(result => {
-          setWeather(result);
-          setQuery('');
-          console.log(result);
-        });
+
+    const api = {
+      key: 'aa8ed9f76f5f4edfaa583915211809',
+
     }
-  }
 
-  // const search = async()=>{
-  //   const url = `${api.base}weather?q=${query}&units=metric&APPID=${api.key}`;
-  //   const response = await fetch(url);
-  //   const resJson = await response.json();
-  //   setWeather(resJson)
-  // }
+    const search = (evt) => {
+      if (evt.key === "Enter") {
+        fetch(`https://api.weatherapi.com/v1/current.json?key=${api.key}&q=${query}&aqi=no`)
+          .then(res => res.json())
+          .then(result => {
+            setWeather(result);
+            setQuery('');
+            console.log(result);
+          });
+      }
+     
+    }
 
-  // (typeof weather.main !=undefined)
-  // ?((weather.main.temp > 16) ? 'app warm' : 'app'):'app' 
   return (
-    <div className="app">
+
+    <div className='app'>
       <main>
         <div className="search-box">
           <input
             type="text"
             className="search-bar"
             placeholder="search..."
-            onChange={e => setQuery(e.target.value)}
+            onChange={e => {
+              setQuery(e.target.value)
+            }}
             value={query}
-            onKeyPress={search}/>
+            onKeyPress={search}
+            />
         </div>
-        
-      {(typeof weather.main != "undefined")?(
+        {(typeof weather.location != "undefined") ?(  <Weather name={weather.location.name} date={date} country={weather.location.country} temp={weather.current.temp_c} text={weather.current.condition.text}  />): (<div style={{ fontSize: '3rem', color: "#b6b7c8", textAlign: 'center' }}> Please enter city </div>)
 
-        <div>
-          <div className="location-box">
-            <div className="location">{weather.name}</div>
-            <div className="date">{day}</div>
-          </div>
-          <div className="weather-box">
-            <div className="temp">
-              15C
-            </div>
-            <div className="weather">Sunny</div>
-          </div>
-        </div>
-
-      ):('')
-
-      }
-        
-
+}
       </main>
     </div>
   );
