@@ -32,7 +32,7 @@ const App = () => {
 
   return (
 
-    <div className='app'>
+    <div className={(typeof weather.location != "undefined") ? ((weather.current.temp_c > 16) ? 'app warm' : 'app') : 'app'}>
       <main>
         <div className="search-box">
           <input

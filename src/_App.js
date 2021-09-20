@@ -65,5 +65,7 @@ export default App;
 {(!query) ? (<div style={{ fontSize: '3rem', color: "#b6b7c8", textAlign: 'center' }}> Please enter city </div>) :
 
 (
-  <Weather name={weather.location.name} date={date} country={weather.location.country} temp={weather.current.temp_c} text={weather.current.condition.text}  />)
+  <Weather name={weather.location.name} date={date} country={weather.location.country} temp={weather.current.temp_c} text={weather.current.condition.text}  />
+  
+  )
 }
